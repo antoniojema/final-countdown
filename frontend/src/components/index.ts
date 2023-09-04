@@ -1,5 +1,6 @@
 import Header from './header/header'
+import {TimeLapse, TotalPercentage} from './timeline/timeline'
 
 export {
-    Header,
+    Header, TimeLapse, TotalPercentage
 }
