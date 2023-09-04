@@ -1,0 +1,1 @@
+export type TimeInfo = { UTCSummerOffset: number, summerToWinter: Date }
