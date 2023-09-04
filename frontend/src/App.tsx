@@ -117,8 +117,16 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
-        <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
+        <div className="container text-center">
+          <div className="row">
+            <div className="col">
+              <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
+            </div>
+            <div className="col">
+              <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
+            </div>
+          </div>
+        </div>
         <TotalPercentage />
         <TimeLapse init={new Date(Date.UTC(2023,8-1,30))} finish={new Date(Date.UTC(2023,12-1,1))}/>
       </div>
