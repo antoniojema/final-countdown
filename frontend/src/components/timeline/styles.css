@@ -1,0 +1,15 @@
+.vertical {
+    border-left: 5px solid #883599;
+    height: 50px;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+}
