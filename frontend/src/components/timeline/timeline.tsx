@@ -1,5 +1,6 @@
 import React from 'react'
 import {totalTime, initDate} from '../../utils/constants'
+import './styles.css'
 
 export class Day extends React.Component<{date : Date}, {}> {
   getDate() {
@@ -10,7 +11,11 @@ export class Day extends React.Component<{date : Date}, {}> {
   }
 
   render() {
-    return <div> {this.getDate()} </div>
+    return (
+    <div className='d-flex justify-content-center'>
+      <div className="vertical"><span className="dot"></span></div>
+    </div>
+    )
   }
 }
 
@@ -38,6 +43,7 @@ export class TimeLapse extends React.Component<{init:Date, finish:Date}> {
 // export class TimeLineMerge extends React.Component {}
 
 // export class Header extends React.Component {}
+
 
 
 
