@@ -9,7 +9,7 @@
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
-    position: relative;
-    left: -15px;
-    top: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
 }

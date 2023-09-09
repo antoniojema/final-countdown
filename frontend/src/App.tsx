@@ -1,39 +1,25 @@
 import React from 'react';
 
-import { Header, TotalPercentage, TimeLapse } from './components'
-import { pics, cities, UTCOffsets, initDate, finishDate, totalTime } from './utils/constants'
+import { Header, TotalPercentage, DayRow, getDays } from './components'
+import { pics, cities, UTCOffsets} from './utils/constants'
 
 export default class App extends React.Component {
   render() {
     return (
       <div>
+        <TotalPercentage />
         <div className="container text-center">
           <div className="row justify-content-md-center align-items-end">
             <div className="col-md-auto p-0">
-              <div>
-                <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
-              </div>
-              <div>
-                <TimeLapse init={new Date(Date.UTC(2023,8-1,30))} finish={new Date(Date.UTC(2023,12-1,1))}/>
-              </div>
+              <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
             </div>
+            <div className="col-md-auto p-0" style={{width: "6rem"}}></div>
             <div className="col-md-auto p-0">
-              <div>
-                <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
-              </div>
-              <div>
-                <TimeLapse init={new Date(Date.UTC(2023,8-1,30))} finish={new Date(Date.UTC(2023,12-1,1))}/>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-md-center align-items-end">
-            <div className="col-md-auto p-0">
-            </div>
-            <div className="col-md-auto p-0">
+              <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
             </div>
           </div>
         </div>
-        <TotalPercentage />
+        {getDays(new Date(Date.UTC(2023, 8-1, 30)), new Date(Date.UTC(2023, 11-1, 30)))}
       </div>
     )
   }
