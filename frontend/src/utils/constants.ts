@@ -31,3 +31,7 @@ export const UTCOffsets = {
     summerToWinter: new Date(Date.UTC(2023, 11 - 1, 5, 6, 0)),
   },
 }
+
+export const dayNames = ['Doming', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+
+export const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']

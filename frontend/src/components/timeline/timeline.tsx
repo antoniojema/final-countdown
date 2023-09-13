@@ -1,5 +1,5 @@
 import React from 'react'
-import {totalTime, initDate, cities} from '../../utils/constants'
+import {totalTime, initDate, cities, dayNames, monthNames} from '../../utils/constants'
 import './styles.css'
 import { getDayEvents, setDayEvent } from '../../utils/utils'
 import { DayEvent } from '../../utils/types'
@@ -36,7 +36,7 @@ export class DayEvents extends React.Component<{city: string, date: Date}, {dayE
     } else {
       const inputEvent = prompt('Añade evento:') || ''
       setDayEvent(this.props.city, this.props.date, inputEvent)
-      this.setState({dayEvents : getDayEvents(this.props.city, this.props.date)}) 
+      this.setState({dayEvents : getDayEvents(this.props.city, this.props.date)})
     }
   }
 
@@ -63,11 +63,13 @@ export class DayLine extends React.Component<{city: string, date : Date}, {}> {
 }
 
 export class Day extends React.Component<{date : Date}, {}> {
+
   getDate() {
     let day = this.props.date.getUTCDate().toString().padStart(2,"0")
     let month = (this.props.date.getUTCMonth()+1).toString().padStart(2,"0")
     let year = this.props.date.getUTCFullYear()
-    return `${day}/${month}/${year}`
+    const currentDayName = dayNames[this.props.date.getDay()]
+    return `${currentDayName}, ${day} de ${monthNames[this.props.date.getMonth()]}`
   }
 
   render() {
