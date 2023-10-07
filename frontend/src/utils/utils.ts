@@ -1,4 +1,4 @@
-import { TimeInfo } from "./types"
+import { DayEvent, TimeInfo } from "./types"
 
 export function formatUTCDate(date: Date): string {
     const day = date.getUTCDate().toString().padStart(2,"0")
@@ -35,4 +35,20 @@ export function getLocalTime(timeInfo: TimeInfo) {
 
 export function getLocalDateAndTime(timeInfo: TimeInfo) {
     return `${getLocalDate(timeInfo)} ${getLocalTime(timeInfo)}`
+}
+
+export function getDayEvents(city: string, date: Date): DayEvent[] {
+    const key =  `${city}+${date}`
+    const element = localStorage.getItem(key) || ''
+    return element === '' ? [] : [
+        {
+            title: '',
+            body: element
+        }
+    ]
+}
+
+export function setDayEvent(city: string, date: Date, event: string) {
+    const key =  `${city}+${date}`
+    localStorage.setItem(key, event)
 }

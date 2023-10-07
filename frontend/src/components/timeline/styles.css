@@ -13,3 +13,15 @@
     top: 50%;
     transform: translate(0,-50%);
 }
+
+.eventAssigned {
+    background-color: green;
+}
+
+.dot:hover {
+    background-color: darkgreen;
+}
+
+.floatMe {
+    float: left
+}
