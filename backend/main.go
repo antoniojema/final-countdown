@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strings"
 	"strconv"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -77,11 +77,11 @@ func (handler *DBHandler) open() {
 	if table_check != nil {
 		fmt.Println("Creating table...")
 		createStudentTableSQL := `CREATE TABLE events (
-            "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,		
+            "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
             "city" TEXT,
             "date" TEXT,
             "title" TEXT,
-            "description" TEXT		
+            "description" TEXT
           );`
 
 		statement, err := db.Prepare(createStudentTableSQL)
@@ -98,8 +98,8 @@ func (handler *DBHandler) close() {
 }
 
 func (handler *DBHandler) read() []byte {
-	insertStudentSQL := `SELECT * FROM events;`
-	query, err1 := handler.db.Query(insertStudentSQL)
+	readEventsSQL := `SELECT * FROM events;`
+	query, err1 := handler.db.Query(readEventsSQL)
 	if err1 != nil {
 		fmt.Println(err1.Error())
 		return []byte{}
@@ -139,8 +139,8 @@ func (handler *DBHandler) create(body *JSON) bool {
 	city, _ := (*body)["city"]
 	date, _ := (*body)["date"]
 
-	insertStudentSQL := `INSERT INTO events(city, date, title, description) VALUES (?, ?, ?, ?)`
-	statement, err := handler.db.Prepare(insertStudentSQL)
+	insertEventSQL := `INSERT INTO events(city, date, title, description) VALUES (?, ?, ?, ?)`
+	statement, err := handler.db.Prepare(insertEventSQL)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -156,13 +156,13 @@ func (handler *DBHandler) create(body *JSON) bool {
 }
 
 func (handler *DBHandler) update(body *JSON) bool {
-	insertStudentSQL := `UPDATE events SET title = ?, description = ? WHERE id=?;`
-	statement, err1 := handler.db.Prepare(insertStudentSQL)
+	updateEventSQL := `UPDATE events SET title = ?, description = ? WHERE id=?;`
+	statement, err1 := handler.db.Prepare(updateEventSQL)
 	if err1 != nil {
 		fmt.Println(err1.Error())
 		return false
 	}
-	
+
 	id, ok := (*body)["id"]
 	if !ok {return false}
 	event, ok := (*body)["event"]
@@ -185,7 +185,22 @@ func (handler *DBHandler) update(body *JSON) bool {
 	return true
 }
 
-func (handler *DBHandler) delete(id int) bool {
+func (handler *DBHandler) delete(body *JSON) bool {
+	deleteEventSQL := `DELETE FROM events WHERE id=?;`
+	statement, err1 := handler.db.Prepare(deleteEventSQL)
+	if err1 != nil {
+		fmt.Println(err1.Error())
+		return false
+	}
+	id, ok := (*body)["id"]
+	if !ok {return false}
+	_, err := statement.Exec(id)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	fmt.Println("Deleted element")
+
 	return true
 }
 
@@ -293,7 +308,7 @@ func update(w http.ResponseWriter, body *JSON) {
 }
 
 func delete(w http.ResponseWriter, body *JSON) {
-	if !DBHandlerInstance.delete((*body)["id"].(int)) {
+	if !DBHandlerInstance.delete(body) {
 		w.WriteHeader(http.StatusBadRequest)
 	}
 }
@@ -335,6 +350,6 @@ func main() {
 	http.HandleFunc("/update", handler)
 	http.HandleFunc("/delete", handler)
 
-	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server is running on port 8100")
+	http.ListenAndServe(":8100", nil)
 }
