@@ -4,10 +4,25 @@ import { Header, TotalPercentage, DayRow, getDays, Login  } from './components'
 import { pics, cities, UTCOffsets} from './utils/constants'
 import { isAuth } from './utils/api'
 
-export default class App extends React.Component {
+async function checkLogin(app : App) {
+  app.setState({is_auth: await isAuth()})
+}
+
+export default class App extends React.Component<{},{is_auth : boolean | undefined}> {
+  constructor(props: {}) {
+    super(props)
+    this.state = {
+      is_auth: undefined
+    }
+  }
+
   render() {
-    if (!isAuth()) {
-      return (<Login />)
+    if (this.state.is_auth === undefined) {
+      checkLogin(this)
+      return (<div></div>)
+    }
+    else if (!this.state.is_auth) {
+      return (<Login app={this} />)
     } else {
       return (
         <div>

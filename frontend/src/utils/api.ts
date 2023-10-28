@@ -4,7 +4,7 @@ function getPwd () {
     return localStorage.getItem(PWD_KEY)
 }
 
-async function isAuth() {
+async function isAuth() : Promise<boolean> {
     const pwd = getPwd()
     if (!pwd) {
         return false
@@ -31,7 +31,7 @@ async function read() {
     body: raw,
     };
 
-    return window.fetch("http://backend.alwaysdata.net/read", requestOptions)
+    return window.fetch("https://backend.alwaysdata.net/read", requestOptions)
 }
 
 export {
