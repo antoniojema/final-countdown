@@ -1,4 +1,5 @@
 import { DayEvent, TimeInfo } from "./types"
+import { EVENTS } from "./api"
 
 export function formatUTCDate(date: Date): string {
     const day = date.getUTCDate().toString().padStart(2,"0")
@@ -38,14 +39,7 @@ export function getLocalDateAndTime(timeInfo: TimeInfo) {
 }
 
 export function getDayEvents(city: string, date: Date): DayEvent[] {
-    const key =  `${city}+${date}`
-    const element = localStorage.getItem(key) || ''
-    return element === '' ? [] : [
-        {
-            title: '',
-            body: element
-        }
-    ]
+    return EVENTS[city][formatUTCDate(date)] || []
 }
 
 export function setDayEvent(city: string, date: Date, event: string) {

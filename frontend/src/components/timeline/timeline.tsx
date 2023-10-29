@@ -32,7 +32,7 @@ export class DayEvents extends React.Component<{city: string, date: Date}, {dayE
   handleOnClick() {
     const event = getDayEvents(this.props.city, this.props.date)
     if (event.length) {
-      alert(event[0].body)
+      alert(event[0].description)
     } else {
       const inputEvent = prompt('Añade evento:') || ''
       setDayEvent(this.props.city, this.props.date, inputEvent)

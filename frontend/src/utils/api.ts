@@ -1,4 +1,12 @@
+import {cities} from "./constants"
+import {DayEvent, CityEvents} from "./types"
+
 const PWD_KEY = 'pwd'
+
+export const EVENTS : { [key : string]: CityEvents; } = {
+    [cities.granada]: {},
+    [cities.columbus] : {},
+}
 
 function getPwd () {
     return localStorage.getItem(PWD_KEY)
@@ -10,12 +18,10 @@ async function isAuth() : Promise<boolean> {
         return false
     }
 
-    const result = await read()
-    console.log('LOGIN RES', result)
-    return result.status === 200
+    return await read()
 }
 
-async function read() {
+async function read() : Promise<boolean> {
     const pwd = getPwd()
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -31,7 +37,25 @@ async function read() {
     body: raw,
     };
 
-    return window.fetch("https://backend.alwaysdata.net/read", requestOptions)
+    const res = await window.fetch("https://backend.alwaysdata.net/read", requestOptions)
+
+    if (res.status !== 200) {
+        return false;
+    }
+
+    const events = (await res.json())["events"]
+    for (const e of events) {
+        const city = e["city"]
+        const date = e["date"]
+        const title = e["title"]
+        const description = e["description"]
+        const id = e["id"]
+
+        EVENTS[city][date] = EVENTS[city][date] || []
+        EVENTS[city][date].push({title, description, id})
+    }
+
+    return true;
 }
 
 export {
