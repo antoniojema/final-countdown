@@ -18,10 +18,10 @@ async function isAuth() : Promise<boolean> {
         return false
     }
 
-    return await read()
+    return await readEvents()
 }
 
-async function read() : Promise<boolean> {
+async function readEvents() : Promise<boolean> {
     const pwd = getPwd()
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -44,6 +44,8 @@ async function read() : Promise<boolean> {
     }
 
     const events = (await res.json())["events"]
+    EVENTS.granada = {}
+    EVENTS.columbus = {}
     for (const e of events) {
         const city = e["city"]
         const date = e["date"]
@@ -58,7 +60,85 @@ async function read() : Promise<boolean> {
     return true;
 }
 
+async function createEvent(city : string, day : string, title : string, description : string) : Promise<boolean> {
+    const pwd = getPwd()
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Origin", "*");
+
+    const raw: string = JSON.stringify({
+        "pass": pwd,
+        "city": city,
+        "date": day,
+        "event": {
+            "title": title,
+            "description": description
+        }
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+    };
+
+    const res = await window.fetch("https://backend.alwaysdata.net/create", requestOptions)
+
+    return res.status === 200
+}
+
+async function updateEvent(id : number, title : string, description : string) : Promise<boolean> {
+    const pwd = getPwd()
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Origin", "*");
+
+    const raw: string = JSON.stringify({
+        "pass": pwd,
+        "id": id,
+        "event": {
+            "title": title,
+            "description": description
+        }
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+    };
+
+    const res = await window.fetch("https://backend.alwaysdata.net/update", requestOptions)
+
+    return res.status === 200
+}
+
+async function deleteEvent(id : number) : Promise<boolean> {
+    const pwd = getPwd()
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Origin", "*");
+
+    const raw: string = JSON.stringify({
+        "pass": pwd,
+        "id": id
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+    };
+
+    const res = await window.fetch("https://backend.alwaysdata.net/delete", requestOptions)
+
+    return res.status === 200
+}
+
 export {
-    read,
+    readEvents,
+    createEvent,
+    updateEvent,
+    deleteEvent,
     isAuth,
 }
