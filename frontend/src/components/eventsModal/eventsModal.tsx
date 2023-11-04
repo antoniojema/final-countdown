@@ -2,6 +2,55 @@ import React from 'react'
 import { EVENTS } from '../../utils/api'
 import { formatUTCDate, getModalId } from '../../utils/utils'
 
+import Collapse from 'react-bootstrap/Collapse';
+import Button from 'react-bootstrap/Button';
+
+function saveNewEvent(city: string, date: Date) {
+  const id = getModalId(city, date);
+  
+  const title       = (document.getElementById(`newevent_title_${id}`      ) as HTMLInputElement).value;
+  const description = (document.getElementById(`newevent_description_${id}`) as HTMLInputElement).value;
+
+  alert(`New event ${id}\nTitle: ${title}\nDescription: ${description}`);
+}
+
+class Footer extends React.Component<{city: string, date: Date}, {is_visible : boolean}> {
+  constructor(props: {city: string, date: Date}) {
+    super(props);
+    this.state = {
+      is_visible: false
+    };
+  }
+
+  render() {
+    const that = this;
+    const id = getModalId(this.props.city, this.props.date)
+    return (
+      <div>
+        <Collapse in={that.state.is_visible}>
+          <div>
+            Title
+            <input type="text" className="form-control" id={`newevent_title_${id}`}/>
+            Description
+            <input type="text" className="form-control" id={`newevent_description_${id}`}/>
+            <Button className="btn btn-success" data-bs-dismiss="modal" onClick={() => {saveNewEvent(that.props.city, that.props.date)}}>
+              Save
+            </Button>
+          </div>
+        </Collapse>
+        <div>
+          <Button className="btn btn-secondary" onClick={() => {that.setState({is_visible: false})}} data-bs-dismiss="modal">
+            Close
+          </Button>
+          <Button className="btn btn-primary" onClick={() => {that.setState({is_visible: !that.state.is_visible});}}>
+            Create new event
+          </Button>
+        </div>
+      </div>
+    )
+  }
+}
+
 export class EventsModal extends React.Component<{ city: string, date: Date }, {}> {
   constructor(props: { city: string, date: Date }) {
     super(props)
@@ -30,23 +79,7 @@ export class EventsModal extends React.Component<{ city: string, date: Date }, {
               {this.getEvents()}
             </div>
             <div className="modal-footer">
-              <p>
-              <button className="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Button with data-bs-target
-              </button>
-              </p>
-              <div className="collapse" id="collapseExample">
-                <div className="card card-body">
-                  Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                </div>
-              </div>
-              <div className="input-group mb-3">
-                <span className="input-group-text">$</span>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)" />
-                <span className="input-group-text">.00</span>
-              </div>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Create new event</button>
+              <Footer city={this.props.city} date={this.props.date}/>
             </div>
           </div>
         </div>
