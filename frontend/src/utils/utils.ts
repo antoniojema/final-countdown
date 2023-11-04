@@ -47,6 +47,6 @@ export function setDayEvent(city: string, date: Date, event: string) {
     localStorage.setItem(key, event)
 }
 
-export function getModalId(city : string, date : Date) {
-    return `eventsmodal_${city}_${formatUTCDate(date)}`
+export function getCityDateId(city: string, date: Date) {
+    return `${city}_${formatUTCDate(date).replaceAll('/', '_')}`
 }

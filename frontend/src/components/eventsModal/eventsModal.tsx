@@ -1,12 +1,12 @@
 import React from 'react'
 import { EVENTS } from '../../utils/api'
-import { formatUTCDate, getModalId } from '../../utils/utils'
+import { formatUTCDate, getCityDateId } from '../../utils/utils'
 
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 
 function saveNewEvent(city: string, date: Date) {
-  const id = getModalId(city, date);
+  const id = getCityDateId(city, date);
   
   const title       = (document.getElementById(`newevent_title_${id}`      ) as HTMLInputElement).value;
   const description = (document.getElementById(`newevent_description_${id}`) as HTMLInputElement).value;
@@ -24,7 +24,7 @@ class Footer extends React.Component<{city: string, date: Date}, {is_visible : b
 
   render() {
     const that = this;
-    const id = getModalId(this.props.city, this.props.date)
+    const id = getCityDateId(this.props.city, this.props.date)
     return (
       <div>
         <Collapse in={that.state.is_visible}>
@@ -62,11 +62,11 @@ export class EventsModal extends React.Component<{ city: string, date: Date }, {
   }
 
   render() {
-    const id = getModalId(this.props.city, this.props.date)
+    const id = getCityDateId(this.props.city, this.props.date)
     const City = this.props.city.charAt(0).toUpperCase() + this.props.city.slice(1)
 
     return (
-      <div className="modal fade" id={id} tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id={`modalevents_${id}`} tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">

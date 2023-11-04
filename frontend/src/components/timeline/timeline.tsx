@@ -4,7 +4,7 @@ import './styles.css'
 import { formatUTCDate, getDayEvents, setDayEvent } from '../../utils/utils'
 import { DayEvent } from '../../utils/types'
 import { EventsModal } from '../eventsModal/eventsModal'
-import { getModalId } from '../../utils/utils'
+import { getCityDateId } from '../../utils/utils'
 
 
 export default class EventTag extends React.Component {
@@ -33,9 +33,9 @@ export class DayEvents extends React.Component<{city: string, date: Date}, {dayE
   }
 
   render() {
-    const modal_id = getModalId(this.props.city, this.props.date)
+    const modal_id = getCityDateId(this.props.city, this.props.date)
     return (
-      <button type="button" className={(this.state.dayEvents.length > 0 ? "dot eventAssigned" : "dot") + " btn btn-primary"} data-bs-toggle="modal" data-bs-target={`#${modal_id}`}/>
+      <button type="button" className={(this.state.dayEvents.length > 0 ? "dot eventAssigned" : "dot") + " btn btn-primary"} data-bs-toggle="modal" data-bs-target={`#modalevents_${modal_id}`}/>
     )
   }
 }
