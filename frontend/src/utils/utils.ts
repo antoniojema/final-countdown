@@ -1,6 +1,8 @@
 import { DayEvent, TimeInfo } from "./types"
 import { EVENTS } from "./api"
 
+var globalApp: React.Component | undefined = undefined
+
 export function formatUTCDate(date: Date): string {
     const day = date.getUTCDate().toString().padStart(2,"0")
     const month = (date.getUTCMonth()+1).toString().padStart(2,"0")
@@ -49,4 +51,12 @@ export function setDayEvent(city: string, date: Date, event: string) {
 
 export function getCityDateId(city: string, date: Date) {
     return `${city}_${formatUTCDate(date).replaceAll('/', '_')}`
+}
+
+export function setGlobalApp(app: React.Component) {
+    globalApp = app
+}
+
+export function getGlobalApp(): React.Component {
+    return globalApp as React.Component
 }

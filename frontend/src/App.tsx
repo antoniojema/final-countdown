@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Header, TotalPercentage, DayRow, getDays, Login  } from './components'
+import { Header, TotalPercentage, getDays, Login  } from './components'
 import { pics, cities, UTCOffsets} from './utils/constants'
 import { isAuth } from './utils/api'
+import { setGlobalApp } from './utils/utils';
 
 async function checkLogin(app : App) {
   app.setState({is_auth: await isAuth()})
@@ -14,6 +15,7 @@ export default class App extends React.Component<{},{is_auth : boolean | undefin
     this.state = {
       is_auth: undefined
     }
+    setGlobalApp(this)
   }
 
   render() {
@@ -40,7 +42,7 @@ export default class App extends React.Component<{},{is_auth : boolean | undefin
           </div>
           {getDays(new Date(Date.UTC(2023, 8-1, 30)), new Date(Date.UTC(2023, 11-1, 30)))}
         </div>
-      ) 
+      )
     }
   }
 }

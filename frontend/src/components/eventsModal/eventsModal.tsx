@@ -1,17 +1,20 @@
 import React from 'react'
-import { EVENTS } from '../../utils/api'
-import { formatUTCDate, getCityDateId } from '../../utils/utils'
+import { EVENTS, createEvent, readEvents } from '../../utils/api'
+import { formatUTCDate, getGlobalApp, getCityDateId } from '../../utils/utils'
 
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 
-function saveNewEvent(city: string, date: Date) {
+async function saveNewEvent(city: string, date: Date) {
   const id = getCityDateId(city, date);
-  
+
   const title       = (document.getElementById(`newevent_title_${id}`      ) as HTMLInputElement).value;
   const description = (document.getElementById(`newevent_description_${id}`) as HTMLInputElement).value;
 
   alert(`New event ${id}\nTitle: ${title}\nDescription: ${description}`);
+  await createEvent(city, formatUTCDate(date), title, description)
+  await readEvents()
+  getGlobalApp().forceUpdate()
 }
 
 class Footer extends React.Component<{city: string, date: Date}, {is_visible : boolean}> {

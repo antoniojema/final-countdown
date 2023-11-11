@@ -23,19 +23,17 @@ export default class EventTag extends React.Component {
 }
 
 
-export class DayEvents extends React.Component<{city: string, date: Date}, {dayEvents: DayEvent[]}> {
+export class DayEvents extends React.Component<{city: string, date: Date}> {
 
   constructor(props: {city: string, date: Date}) {
     super(props)
-    this.state = {
-      dayEvents: getDayEvents(this.props.city, this.props.date)
-    }
   }
 
   render() {
+    const dayEvents = getDayEvents(this.props.city, this.props.date)
     const modal_id = getCityDateId(this.props.city, this.props.date)
     return (
-      <button type="button" className={(this.state.dayEvents.length > 0 ? "dot eventAssigned" : "dot") + " btn btn-primary"} data-bs-toggle="modal" data-bs-target={`#modalevents_${modal_id}`}/>
+      <button type="button" className={(dayEvents.length > 0 ? "dot eventAssigned" : "dot") + " btn btn-primary"} data-bs-toggle="modal" data-bs-target={`#modalevents_${modal_id}`}/>
     )
   }
 }
