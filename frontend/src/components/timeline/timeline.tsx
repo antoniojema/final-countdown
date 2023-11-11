@@ -61,8 +61,25 @@ export class Day extends React.Component<{date : Date}, {}> {
     return `${day}/${month}/${year}`
   }
 
+  isToday() {
+    const now = new Date()
+    return now.getDate() === this.props.date.getDate() && now.getMonth() === this.props.date.getMonth() && now.getFullYear() === this.props.date.getFullYear()
+  }
+
+  componentDidMount() {
+    if (this.isToday()) {
+      const today = new Date()
+      const day = today.getDate().toString().padStart(2,"0")
+      const month = (today.getMonth()+1).toString().padStart(2,"0")
+      const year = today.getFullYear()
+      const id = `${day}_${month}_${year}`
+      const d = document.getElementById(id)
+      d?.scrollIntoView()
+    }
+  }
+
   render() {
-    return <div>{this.getDate()}</div>
+    return <div id={formatUTCDate(this.props.date).replaceAll('/', '_')}>{this.getDate()}</div>
   }
 }
 
