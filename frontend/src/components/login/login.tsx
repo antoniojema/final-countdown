@@ -14,7 +14,7 @@ export default class Login extends React.Component<{app : React.Component}> {
 
     render() {
         return (
-            <div>
+            <div style={{position: 'relative'}}>
                 <h1>Login to the App</h1>
                 <input type="password" id="pwd"></input>
                 <button onClick={() => this.savePassword()}>Login</button>
