@@ -1,0 +1,9 @@
+.withoutFlex {
+    display: block
+}
+
+.footerButtons{
+    display: flex;
+    flex-direction: column;
+
+}

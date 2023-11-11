@@ -1,6 +1,7 @@
 import React from 'react'
 import { EVENTS, createEvent, readEvents } from '../../utils/api'
 import { formatUTCDate, getGlobalApp, getCityDateId } from '../../utils/utils'
+import './styles.css'
 
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
@@ -31,21 +32,18 @@ class Footer extends React.Component<{city: string, date: Date}, {is_visible : b
     return (
       <div>
         <Collapse in={that.state.is_visible}>
-          <div>
+          <div className="m-1">
             Title
             <input type="text" className="form-control" id={`newevent_title_${id}`}/>
             Description
             <input type="text" className="form-control" id={`newevent_description_${id}`}/>
-            <Button className="btn btn-success" data-bs-dismiss="modal" onClick={() => {saveNewEvent(that.props.city, that.props.date)}}>
+            <Button className="btn btn-success mt-2" data-bs-dismiss="modal" onClick={() => {saveNewEvent(that.props.city, that.props.date)}}>
               Save
             </Button>
           </div>
         </Collapse>
-        <div>
-          <Button className="btn btn-secondary" onClick={() => {that.setState({is_visible: false})}} data-bs-dismiss="modal">
-            Close
-          </Button>
-          <Button className="btn btn-primary" onClick={() => {that.setState({is_visible: !that.state.is_visible});}}>
+        <div className="footerButtons">
+          <Button className="btn btn-primary m-1" onClick={() => {that.setState({is_visible: !that.state.is_visible});}}>
             Create new event
           </Button>
         </div>
@@ -61,6 +59,9 @@ export class EventsModal extends React.Component<{ city: string, date: Date }, {
 
   getEvents() {
     const events = EVENTS[this.props.city][formatUTCDate(this.props.date)] || []
+    if (events.length === 0) {
+      return (<h5>No events today!</h5>)
+    }
     return <ul>{events.map(e => <li>{e.title}: {e.description}</li>)}</ul>
   }
 
@@ -81,7 +82,7 @@ export class EventsModal extends React.Component<{ city: string, date: Date }, {
             <div className="modal-body">
               {this.getEvents()}
             </div>
-            <div className="modal-footer">
+            <div className="withoutFlex modal-footer">
               <Footer city={this.props.city} date={this.props.date}/>
             </div>
           </div>
