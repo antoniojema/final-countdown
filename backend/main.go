@@ -314,6 +314,13 @@ func delete(w http.ResponseWriter, body *JSON) {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	
+	if (r.Method == "OPTIONS") {
+		return
+	}
+
 	handler_function, ok := handlerMap[r.URL.Path]
 	if !ok {
 		http.NotFound(w, r)

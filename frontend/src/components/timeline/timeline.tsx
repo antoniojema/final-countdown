@@ -1,8 +1,11 @@
 import React from 'react'
 import {totalTime, initDate, cities} from '../../utils/constants'
 import './styles.css'
-import { getDayEvents, setDayEvent } from '../../utils/utils'
+import { formatUTCDate, getDayEvents, setDayEvent } from '../../utils/utils'
 import { DayEvent } from '../../utils/types'
+import { EventsModal } from '../eventsModal/eventsModal'
+import { getCityDateId } from '../../utils/utils'
+
 
 export default class EventTag extends React.Component {
 
@@ -20,30 +23,17 @@ export default class EventTag extends React.Component {
 }
 
 
-export class DayEvents extends React.Component<{city: string, date: Date}, {dayEvents: DayEvent[]}> {
+export class DayEvents extends React.Component<{city: string, date: Date}> {
 
   constructor(props: {city: string, date: Date}) {
     super(props)
-    this.state = {
-      dayEvents: getDayEvents(this.props.city, this.props.date)
-    }
-  }
-
-  handleOnClick() {
-    const event = getDayEvents(this.props.city, this.props.date)
-    if (event.length) {
-      alert(event[0].body)
-    } else {
-      const inputEvent = prompt('Añade evento:') || ''
-      setDayEvent(this.props.city, this.props.date, inputEvent)
-      this.setState({dayEvents : getDayEvents(this.props.city, this.props.date)}) 
-    }
   }
 
   render() {
-    const that = this
+    const dayEvents = getDayEvents(this.props.city, this.props.date)
+    const modal_id = getCityDateId(this.props.city, this.props.date)
     return (
-      <div className={this.state.dayEvents.length > 0 ? "dot eventAssigned" : "dot"} onClick={() => that.handleOnClick()}/>
+      <button type="button" className={(dayEvents.length > 0 ? "dot eventAssigned" : "dot") + " btn btn-primary"} data-bs-toggle="modal" data-bs-target={`#modalevents_${modal_id}`}/>
     )
   }
 }
@@ -54,6 +44,7 @@ export class DayLine extends React.Component<{city: string, date : Date}, {}> {
       <div className="d-flex justify-content-center m-auto" style={{width:"25px", position:"relative"}}>
         <div className="vertical"/>
         <DayEvents city={this.props.city} date={this.props.date}/>
+        <EventsModal city={this.props.city} date={this.props.date}/>
       </div>
     // <div className='d-flex justify-content-center'>
     //   <div className="vertical"><DayEvents/></div>
