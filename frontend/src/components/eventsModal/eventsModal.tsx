@@ -117,15 +117,15 @@ class EventCard extends React.Component<{title : string, description : string, i
         <Card className="m-1">
           <Card.Body>
             <Form>
-              <Form.Group className="mb-3" controlId={`edit_title_${this.props.id}`}>
+              <Form.Group className="mb-2" controlId={`edit_title_${this.props.id}`}>
                 <Form.Label>Title</Form.Label>
-                <Form.Control value={this.props.title} />
+                <Form.Control defaultValue={this.props.title} />
               </Form.Group>
-              <Form.Group className="mb-3" controlId={`edit_description_${this.props.id}`}>
+              <Form.Group className="mb-2" controlId={`edit_description_${this.props.id}`}>
                 <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows={3} value={this.props.title}/>
+                <Form.Control as="textarea" rows={3} defaultValue={this.props.description}/>
               </Form.Group>
-              <Button variant="secondary" onClick={() => {that.toggleMode()}}>Cancel</Button> <Button variant="success">Save</Button>
+              <Button variant="secondary" onClick={() => {that.toggleMode()}}>Cancel</Button> <Button variant="success" onClick={() => {that.confirmEdit()}}>Save</Button>
             </Form>
           </Card.Body>
         </Card>
