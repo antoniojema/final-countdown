@@ -54,6 +54,15 @@ export class DayLine extends React.Component<{city: string, date : Date}, {}> {
 }
 
 export class Day extends React.Component<{date : Date}, {}> {
+  isToday: boolean
+  isAnniversary: boolean
+  constructor(props: {date: Date}) {
+    super(props)
+    const now = new Date()
+    this.isToday = now.getDate() === this.props.date.getDate() && now.getMonth() === this.props.date.getMonth() && now.getFullYear() === this.props.date.getFullYear()
+    this.isAnniversary = this.props.date.getDate() === 27 && this.props.date.getMonth() === 10 && this.props.date.getFullYear() === 2023
+  }
+
   getDate() {
     let day = this.props.date.getUTCDate().toString().padStart(2,"0")
     let month = (this.props.date.getUTCMonth()+1).toString().padStart(2,"0")
@@ -61,13 +70,8 @@ export class Day extends React.Component<{date : Date}, {}> {
     return `${day}/${month}/${year}`
   }
 
-  isToday() {
-    const now = new Date()
-    return now.getDate() === this.props.date.getDate() && now.getMonth() === this.props.date.getMonth() && now.getFullYear() === this.props.date.getFullYear()
-  }
-
   componentDidMount() {
-    if (this.isToday()) {
+    if (this.isToday) {
       const today = new Date()
       const day = today.getDate().toString().padStart(2,"0")
       const month = (today.getMonth()+1).toString().padStart(2,"0")
@@ -79,7 +83,7 @@ export class Day extends React.Component<{date : Date}, {}> {
   }
 
   render() {
-    return <div id={formatUTCDate(this.props.date).replaceAll('/', '_')}>{this.getDate()}</div>
+    return <div style={{fontWeight: this.isToday ? 900 : 'normal'}} id={formatUTCDate(this.props.date).replaceAll('/', '_')}>{this.getDate()}{this.isAnniversary ? '❤️' : ''}</div>
   }
 }
 
