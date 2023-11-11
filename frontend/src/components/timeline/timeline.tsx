@@ -91,7 +91,7 @@ export class DayRow extends React.Component<{date:Date},{}> {
         <div className="col-md-auto p-0 align-self-center" style={{width: "18rem"}}>
             <DayLine city={cities.columbus} date={this.props.date}/>
         </div>
-        <div className="col-md-auto p-0 align-self-center" style={{width: "6rem"}}>
+        <div className="col-md-auto p-0 align-self-center" style={{width: "6rem", position: "relative"}}>
           <Day date={this.props.date}/>
         </div>
         <div className="col-md-auto p-0 align-self-center" style={{width: "18rem"}}>
@@ -147,7 +147,7 @@ export class TotalPercentage extends React.Component<{},{passedPercentage:string
 
   render() {
     return (
-      <div>
+      <div style={{position: "relative"}}>
         <h1>Total percentage passed</h1>
         <div>{this.state.passedPercentage}%</div>
         <div className="progress" role="progressbar" aria-label="Success example">
