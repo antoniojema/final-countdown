@@ -29,15 +29,12 @@ export default class App extends React.Component<{},{is_auth : boolean | undefin
       return (
         <div>
           <TotalPercentage />
-          <div className="container text-center">
-            <div className="row justify-content-md-center align-items-end">
-              <div className="col-md-auto p-0">
-                <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
-              </div>
-              <div className="col-md-auto p-0" style={{width: "6rem"}}></div>
-              <div className="col-md-auto p-0">
-                <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
-              </div>
+          <div className="row justify-content-md-center align-items-end flex-nowrap">
+            <div className="col col-md-auto p-0">
+              <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
+            </div>
+            <div className="col col-md-auto p-0">
+              <Header url={pics.granada} city={"Granada"} timeInfo={UTCOffsets[cities.granada]}></Header>
             </div>
           </div>
           {getDays(new Date(Date.UTC(2023, 8-1, 30)), new Date(Date.UTC(2023, 11-1, 30)))}

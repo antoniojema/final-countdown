@@ -23,7 +23,7 @@ export default class Header extends React.Component<{url: string, city: string, 
         return (
             <div className="card" style={{width: "18rem"}}>
             <img src={this.props.url} className="card-img-top" style={{height:"12rem", objectFit: "cover"}}/>
-            <div className="card-body">
+            <div className="card-body text-center">
                 <h5 className="card-title">{this.props.city}</h5>
                 <h5>{getLocalDate(this.props.timeInfo)}</h5>
                 <h5>{getLocalTime(this.props.timeInfo)}</h5>

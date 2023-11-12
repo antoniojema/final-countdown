@@ -54,20 +54,19 @@ export class DayLine extends React.Component<{city: string, date : Date}, {}> {
 }
 
 export class Day extends React.Component<{date : Date}, {}> {
+
   isToday: boolean
   isAnniversary: boolean
+  
   constructor(props: {date: Date}) {
     super(props)
     const now = new Date()
-    this.isToday = now.getDate() === this.props.date.getDate() && now.getMonth() === this.props.date.getMonth() && now.getFullYear() === this.props.date.getFullYear()
-    this.isAnniversary = this.props.date.getDate() === 27 && this.props.date.getMonth() === 10 && this.props.date.getFullYear() === 2023
+    this.isToday = now.getDate() === this.props.date.getUTCDate() && now.getMonth() === this.props.date.getMonth() && now.getFullYear() === this.props.date.getUTCFullYear()
+    this.isAnniversary = this.props.date.getUTCDate() === 27 && this.props.date.getUTCMonth() === 10 && this.props.date.getUTCFullYear() === 2023
   }
 
   getDate() {
-    let day = this.props.date.getUTCDate().toString().padStart(2,"0")
-    let month = (this.props.date.getUTCMonth()+1).toString().padStart(2,"0")
-    let year = this.props.date.getUTCFullYear()
-    return `${day}/${month}/${year}`
+    return formatUTCDate(this.props.date, true, true)
   }
 
   componentDidMount() {
@@ -83,7 +82,11 @@ export class Day extends React.Component<{date : Date}, {}> {
   }
 
   render() {
-    return <div style={{fontWeight: this.isToday ? 900 : 'normal'}} id={formatUTCDate(this.props.date).replaceAll('/', '_')}>{this.getDate()}{this.isAnniversary ? '❤️' : ''}</div>
+    return (
+      <div style={{fontWeight: this.isToday ? 900 : 'normal'}} id={formatUTCDate(this.props.date).replaceAll('/', '_')}>
+        {this.isAnniversary ? '❤️' : ''} {this.getDate()} {this.isAnniversary ? '❤️' : ''}
+      </div>
+    )
   }
 }
 
@@ -108,15 +111,15 @@ export class TimeLapse extends React.Component<{city: string, init:Date, finish:
 export class DayRow extends React.Component<{date:Date},{}> {
   render() {
     return (
-      <div className="row justify-content-md-center align-items-end">
-        <div className="col-md-auto p-0 align-self-center" style={{width: "18rem"}}>
-            <DayLine city={cities.columbus} date={this.props.date}/>
+      <div className="row justify-content-md-center align-items-end flex-nowrap">
+        <div className="col-md-auto p-0 align-self-center " style={{width: "6rem"}}>
+          <DayLine city={cities.columbus} date={this.props.date}/>
         </div>
-        <div className="col-md-auto p-0 align-self-center" style={{width: "6rem", position: "relative"}}>
+        <div className="col-md-auto p-0 align-self-center" style={{width: "12rem", position: "relative", display: "flex", justifyContent: "center"}}>
           <Day date={this.props.date}/>
         </div>
-        <div className="col-md-auto p-0 align-self-center" style={{width: "18rem"}}>
-            <DayLine  city={cities.granada} date={this.props.date}/>
+        <div className="col-md-auto p-0 align-self-center" style={{width: "6rem"}}>
+          <DayLine  city={cities.granada} date={this.props.date}/>
         </div>
       </div>
     )
@@ -168,11 +171,11 @@ export class TotalPercentage extends React.Component<{},{passedPercentage:string
 
   render() {
     return (
-      <div style={{position: "relative"}}>
-        <h1>Total percentage passed</h1>
-        <div>{this.state.passedPercentage}%</div>
-        <div className="progress" role="progressbar" aria-label="Success example">
-          <div className="progress-bar bg-success" style={{width: `${this.state.passedPercentage}%`}}>{this.state.passedPercentage}%</div>
+      <div className="row justify-content-md-center align-items-end flex-nowrap text-center mb-2" style={{position: "relative", marginRight: "0"}}>
+        <div className="col col-md-auto p-0 mt-2" style={{width: "36rem"}}>
+          <div className="progress" role="progressbar" aria-label="Success example">
+            <div className="progress-bar bg-success" style={{width: `${this.state.passedPercentage}%`}}>{this.state.passedPercentage}%</div>
+          </div>
         </div>
       </div>
     )
