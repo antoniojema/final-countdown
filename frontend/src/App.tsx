@@ -29,7 +29,7 @@ export default class App extends React.Component<{},{is_auth : boolean | undefin
       return (
         <div>
           <TotalPercentage />
-          <div className="row justify-content-md-center align-items-end flex-nowrap">
+          <div className="container-fluid row justify-content-md-center align-items-end flex-nowrap">
             <div className="col col-md-auto p-0">
               <Header url={pics.columbus} city={"Columbus"} timeInfo={UTCOffsets[cities.columbus]}></Header>
             </div>

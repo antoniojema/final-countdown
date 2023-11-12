@@ -111,7 +111,7 @@ export class TimeLapse extends React.Component<{city: string, init:Date, finish:
 export class DayRow extends React.Component<{date:Date},{}> {
   render() {
     return (
-      <div className="row justify-content-md-center align-items-end flex-nowrap">
+      <div className="container-fluid row justify-content-md-center align-items-end flex-nowrap">
         <div className="col-md-auto p-0 align-self-center " style={{width: "6rem"}}>
           <DayLine city={cities.columbus} date={this.props.date}/>
         </div>
@@ -171,7 +171,7 @@ export class TotalPercentage extends React.Component<{},{passedPercentage:string
 
   render() {
     return (
-      <div className="row justify-content-md-center align-items-end flex-nowrap text-center mb-2" style={{position: "relative", marginRight: "0"}}>
+      <div className="container-fluid row justify-content-md-center align-items-end flex-nowrap text-center mb-2" style={{position: "relative", marginRight: "0"}}>
         <div className="col col-md-auto p-0 mt-2" style={{width: "36rem"}}>
           <div className="progress" role="progressbar" aria-label="Success example">
             <div className="progress-bar bg-success" style={{width: `${this.state.passedPercentage}%`}}>{this.state.passedPercentage}%</div>
